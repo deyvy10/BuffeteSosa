@@ -42,14 +42,13 @@
             <div id="fondo" data-role="content">	
 	    <div id="contenido" data-role="content">
 	        <form id="empresa2" name="empresa2" action="crear_usuario.php" method="post" enctype="multipart/form-data">
-				<div align="center">
-					
-				</div>
-				<div style="width: 80%; margin: auto;" class="ui-field-contain">
+	        	<div style="width: 100%; margin: auto;" class="ui-field-contain"><?php 	include('header.php') ?> <br><br><br><br></div>
+			<div style="width: 80%; margin: auto;" class="ui-field-contain">
 	<div>
 <h1 align="CENTER">Registrar Cliente</h1>
 
-</div>		
+</div>
+
 
 			<center><label style="color: #2A4151 !important; text-shadow: none; font-weight: bold;">Categoria del Caso:</label></center>
 						<select name="categoria" id="categoria" data-mini="true" required/>
@@ -104,25 +103,34 @@
  </div>           
 </form>
             <style type="text/css">
-		  	#contenido
-		  	{
- 				background: url(../images/sil.png);
+		  	 #contenido
+        {
+         
+ background: url(images/b.png);
+
+
                 background-repeat: repeat-x;
                 background-position:bottom;
                 background-attachment:scroll;
                 min-height: 30vh;
-                min-height: 100vh;
-		  	}
-		  	#fondo
-		  	{
 
-		   background: linear-gradient(to right, rgba(225, 142, 0), rgba(253, 219, 0));
-		  	}
-		  	#titulo1
-		  	{
-		  		font-color: #2A4151 !important;
-		  		text-align: center;
-		  	}     
+                min-height: 100vh;
+
+        }
+        #fondo
+        {
+
+                           background: linear-gradient(to right, rgba(85, 161, 169), rgba(124, 155, 224, 0.33));
+
+        }
+
+
+
+        #titulo1
+        {
+          font-color: #2A4151 !important;
+          text-align: center;
+        }
 		</style>                    
 </div>
 </div>
