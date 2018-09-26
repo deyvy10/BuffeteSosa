@@ -1,26 +1,6 @@
 
 <?php 
 	include 'conexion_mysql.php';
-	if (isset($_POST['enviar'])) {
-
-		$nombre=$_POST["nombre"];
-		$apellido=$_POST["apellido"];
-		$cedula=$_POST["cedula"];
-		$telefono=$_POST["telefono"];
-		$telefono2=$_POST["telefono2"];
-		$correo=$_POST["correo"];
-		$direccion=$_POST["direccion"];
-
-		$insertarCliente=$mysqli->query("INSERT INTO tbl_cliente(cliente_nombre,cliente_apellido,cliente_identidad,departamento_codigo,municipio_codigo,cliente_correo,categoriacaso_codigo,cliente_direccion)VALUES('$nombre','$apellido','$cedula','".$_POST["departamento"]."','".$_POST["municipio"]."','$correo','".$_POST["categoria"]."','$direccion')");
-
-		$ultimo_id=mysqli_insert_id($mysqli);
-
-		$insertartelefono=$mysqli->query("INSERT INTO tbl_clientetelefono(cliente_codigo,telefono_telefono)VALUES('$ultimo_id','$telefono')");
-
-		$insertartelefono2=$mysqli->query("INSERT INTO tbl_clientetelefono(cliente_codigo,telefono_telefono)VALUES('$ultimo_id','$telefono2')");
-
-		$insertarcaso=$mysqli->query("INSERT INTO tbl_caso(cliente_codigo,categoriacaso_codigo)VALUES('$ultimo_id','".$_POST["categoria"]."')");	
-	}
  ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -34,20 +14,12 @@
     <script src="js/jquery-1.10.2.min.js"></script>
     <script src="js/jquery.mobile-1.4.2.min.js"></script>
  	<script src="functions.js"></script>
-
-
-
-
-
-
 </head>
 <body>
-
 	<div data-role="page" class="jqm-demos ui-responsive-panel" id="inicio">
-         
-            <div id="fondo" data-role="content">	
+           <div id="fondo" data-role="content">	
 	    <div id="contenido" data-role="content">
-	        <form id="empresa2" name="empresa2" action="crear_usuario.php" method="post" enctype="multipart/form-data">
+	        <form id="empresa2" name="empresa2" action="solicitar_archivos.php" method="post" enctype="multipart/form-data">
 	        	<div style="width: 100%; margin: auto;" class="ui-field-contain">
 	        		<?php 	include('header.php') ?> <br><br><br><br>
 	        	</div>
@@ -56,8 +28,6 @@
 <h1 align="CENTER">Registrar Cliente</h1>
 
 </div>
-
-
 			<center><label style="color: #2A4151 !important; text-shadow: none; font-weight: bold;">Categoria del Caso:</label></center>
 						<select name="categoria" id="categoria" data-mini="true" required/>
 		        			 <option value="">[SELECCIONE UNA CATEGORIA]</option>
@@ -114,27 +84,17 @@
             <style type="text/css">
 		  	 #contenido
         {
-         
- background: url(images/b.png);
-
-
+         		background: url(images/b.png);
                 background-repeat: repeat-x;
                 background-position:bottom;
                 background-attachment:scroll;
                 min-height: 30vh;
-
                 min-height: 100vh;
-
         }
         #fondo
         {
-
-                           background: linear-gradient(to right, rgba(85, 161, 169), rgba(124, 155, 224, 0.33));
-
+          background: linear-gradient(to right, rgba(85, 161, 169), rgba(124, 155, 224, 0.33));
         }
-
-
-
         #titulo1
         {
           font-color: #2A4151 !important;
