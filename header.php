@@ -16,8 +16,11 @@
  
 </head>
 
+<body>
 
-      <div class="layout" style="width:100%;">  
+
+	      <div class="layout" data-role="content" style=" min-height:100%;
+                           background: linear-gradient(to right, rgba(251, 251, 251), rgba(204, 207, 214, 0.33));overflow-x: overlay;">  
       
         <a onclick='javascript:tarea()'>
         	<div class="brick1"></br></br></br><h5><P  style="COLOR: #000000; BACKGROUND-COLOR: #5FD3DE ">Clientes</P></h5></div>
@@ -47,14 +50,18 @@
      	</a>
         <div class="brick0"></div>
 
-   </div>
+
+
+
+
+
 
     <style type="text/css">
+     
 
     .layout {
-        margin: 2em 15px;
         color: #333;
-      }
+          }
 
       .brick1:hover
       {
@@ -122,6 +129,7 @@
       background-position: center;
       }
     </style>
+    </body>
     
   
 

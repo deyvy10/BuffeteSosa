@@ -34,6 +34,12 @@
     <script src="js/jquery-1.10.2.min.js"></script>
     <script src="js/jquery.mobile-1.4.2.min.js"></script>
  	<script src="functions.js"></script>
+
+
+
+
+
+
 </head>
 <body>
 
@@ -42,7 +48,9 @@
             <div id="fondo" data-role="content">	
 	    <div id="contenido" data-role="content">
 	        <form id="empresa2" name="empresa2" action="crear_usuario.php" method="post" enctype="multipart/form-data">
-	        	<div style="width: 100%; margin: auto;" class="ui-field-contain"><?php 	include('header.php') ?> <br><br><br><br></div>
+	        	<div style="width: 100%; margin: auto;" class="ui-field-contain">
+	        		<?php 	include('header.php') ?> <br><br><br><br>
+	        	</div>
 			<div style="width: 80%; margin: auto;" class="ui-field-contain">
 	<div>
 <h1 align="CENTER">Registrar Cliente</h1>
@@ -102,6 +110,7 @@
 </div>
  </div>           
 </form>
+
             <style type="text/css">
 		  	 #contenido
         {
