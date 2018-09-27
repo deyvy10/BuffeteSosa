@@ -1,4 +1,3 @@
-
 <?php 
 	include 'conexion_mysql.php';
  ?>
@@ -19,24 +18,23 @@
 	<div data-role="page" class="jqm-demos ui-responsive-panel" id="inicio">
            <div id="fondo" data-role="content">	
 	    <div id="contenido" data-role="content">
-	        <form id="empresa2" name="empresa2" action="solicitar_archivos.php" method="post" enctype="multipart/form-data">
-	        	<div style="width: 100%; margin: auto;" class="ui-field-contain">
+		<div style="width: 100%; margin: auto;" class="ui-field-contain">
 	        		<?php 	include('header.php') ?> <br><br><br><br>
 	        	</div>
 			<div style="width: 80%; margin: auto;" class="ui-field-contain">
-	<div>
-<h1 align="CENTER">Registrar Cliente</h1>
 
-</div>
+	        <form id="empresa2" name="empresa2" method="post">
+				<h1 align="CENTER">Registrar Cliente</h1>
+			
 			<center><label style="color: #2A4151 !important; text-shadow: none; font-weight: bold;">Categoria del Caso:</label></center>
 						<select name="categoria" id="categoria" data-mini="true" required/>
 		        			 <option value="">[SELECCIONE UNA CATEGORIA]</option>
 									<?php
-                            $query = $mysqli -> query ("SELECT categoriacaso_codigo,categoriacaso_nombre FROM tbl_categoriacaso");
-                            while ($valores = mysqli_fetch_array($query)) {
-                            echo '<option value="'.$valores[categoriacaso_codigo].'">'.$valores[categoriacaso_nombre].'</option>';
-                            }
-                          ?>
+                          		  $query = $mysqli -> query ("SELECT categoriacaso_codigo,categoriacaso_nombre FROM tbl_categoriacaso");
+                            	while ($valores = mysqli_fetch_array($query)) {
+                            	echo '<option value="'.$valores[categoriacaso_codigo].'">'.$valores[categoriacaso_nombre].'</option>';
+                            		}
+                          		?>
 				       </select>
 
 			<center><label  style="color: #2A4151 !important; text-shadow: none; font-weight: bold;">Nombre Completo:</label></center> 
@@ -70,15 +68,41 @@
 			
 			<center><label  style="color: #2A4151 !important; text-shadow: none; font-weight: bold;">Correo Electrónico:</label></center> 
 			 <input type="email" class="form-control" id="correo" placeholder="Correo del Cliente" name="correo" autofocus required/> 
-</br>
-</br>
-</br>
-			<fieldset style="width: 100%; margin: center;"> 
+
+		<fieldset style="width: 100%; margin: center;"> 
 					
-						<input style="width: 100%;" data-theme="b" type="submit" data-icon="arrow-r" value="enviar" id="enviar" name="enviar"/> 
+						<input style="width: 100%;" data-theme="b" type="submit" data-icon="arrow-r" value="enviar" id="enviar" name="enviar" />
+
+						<?php 
+
+						if (isset($_POST["enviar"])) {
+
+						$nombre=$_POST["nombre"];
+						$apellido=$_POST["apellido"];
+						$cedula=$_POST["cedula"];
+						$telefono=$_POST["telefono"];
+						$telefono2=$_POST["telefono2"];
+						$correo=$_POST["correo"];
+						$direccion=$_POST["direccion"];
+
+		$insertarCliente=$mysqli->query("INSERT INTO tbl_cliente(cliente_nombre,cliente_apellido,cliente_identidad,departamento_codigo,municipio_codigo,cliente_correo,categoriacaso_codigo,cliente_direccion)VALUES('$nombre','$apellido','$cedula','".$_POST["departamento"]."','".$_POST["municipio"]."','$correo','".$_POST["categoria"]."','$direccion')");
+
+		$ultimo_id=mysqli_insert_id($mysqli);
+
+		$insertartelefono=$mysqli->query("INSERT INTO tbl_clientetelefono(cliente_codigo,telefono_telefono)VALUES('$ultimo_id','$telefono')");
+
+		$insertartelefono2=$mysqli->query("INSERT INTO tbl_clientetelefono(cliente_codigo,telefono_telefono)VALUES('$ultimo_id','$telefono2')");
+
+		$insertarcaso=$mysqli->query("INSERT INTO tbl_caso(cliente_codigo,categoriacaso_codigo)VALUES('$ultimo_id','".$_POST["categoria"]."')");
+						
+						echo "<script language=\"javascript\">
+                        window.open('solicitar_archivos.php','_self',false);
+                    </script>";
+                    }
+
+						?> 
 			</fieldset>
-</div>
- </div>           
+ 	
 </form>
 
             <style type="text/css">
@@ -111,6 +135,14 @@
     $('.telefono').mask('(000) 0000-0000');
      $('.telefono2').mask('(000) 0000-0000');
     $('.cedula').mask('0000-0000-00000');
-</script>	
+</script>
+
+<script>
+function siguiente(){
+
+	window.open('solicitar_archivos.php','_SELF',false);
+}	
+
+</script>
 </body>
 </html>

@@ -1,70 +1,118 @@
 <?php 
-		include 'conexion_mysql.php';
 
-		if (isset($_POST['guardar'])) {
-			//mkdir("Archivos/".$cedula);
-			//mkdir("Archivos/$cedula/".$nombre);
-		$archivos=$_FILES['text']['name'];
-		$rutaarchivos="Archivos/".$archivos;
-		$insertararchivos=$mysqli->query("INSERT INTO tbl_clientearchivos(cliente_codigo,archivos_ruta) VALUES(1,'$rutaarchivos')");
-		echo $archivos;
-		}
+include ('conexion_mysql.php');
  ?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
-	<meta charset="UTF-8">
 	<title>Solicitar Archivos</title>
-	<link rel="shortcut icon" href="../images/mar.ico">
-		<meta http-equiv="Content-type" content="text/html; charset=utf-8"/>
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"> 
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="css/jquery.mobile-1.4.2.min.css">
-    <script src="js/jquery-1.10.2.min.js"></script>
-    <script src="js/jquery.mobile-1.4.2.min.js"></script>
+    <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.2/jquery.mobile-1.4.2.min.css">
+    <script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
+    <script src="http://code.jquery.com/mobile/1.4.2/jquery.mobile-1.4.2.min.js"></script>
+<script type="text/javascript"> 
+var numero = 0;
+evento = function (evt) { 
+return (!evt) ? event : evt; 
+} 
+addCampo = function () {  
+nDiv = document.createElement('div');  
+nDiv.className = 'archivo'; 
+nDiv.id = 'file' + (++numero); 
+nCampo = document.createElement('input');  
+nCampo.name = 'archivos[]'; 
+nCampo.type = 'file'; 
+nCampo.required=true;
+a = document.createElement('a'); 
+a.name = nDiv.id;  
+a.href = '#';  
+a.onclick = elimCamp;  
+a.innerHTML = 'Eliminar'; 
+nDiv.appendChild(nCampo); 
+nDiv.appendChild(a);  
+container = document.getElementById('adjuntos'); 
+container.appendChild(nDiv); 
+} 
+elimCamp = function (evt){ 
+evt = evento(evt); 
+nCampo = rObj(evt); 
+div = document.getElementById(nCampo.name); 
+div.parentNode.removeChild(div); 
+} 
+rObj = function (evt) { 
+return evt.srcElement ? evt.srcElement : evt.target; 
+} 
+</script> 
 </head>
-<body>
-<style>
-input.text{
-display:block;
-}
-</style>
-	<div data-role="page" class="jqm-demos ui-responsive-panel" id="inicio">
-            <div id="fondo" data-role="content">	
+
+
+<body oncontextmenu="return false">
+	<div id="fondo" data-role="content">	
 	    <div id="contenido" data-role="content">
-	        <form id="empresa2" name="empresa2" action="" method="post" enctype="multipart/form-data">
-	        	<div style="width: 100%; margin: auto;" class="ui-field-contain">
+	        <form id="empresa" name="empresa" action="solicitar_archivos.php" method="post" data-ajax="false"  enctype="multipart/form-data">
+		<div style="width: 100%; margin: auto;" class="ui-field-contain">
 	        		<?php 	include('header.php') ?> <br><br><br><br>
 	        	</div>
 			<div style="width: 80%; margin: auto;" class="ui-field-contain">
+		<div>
+			<h1 align="CENTER">Subir Archivos del Cliente</h1>
+		</div>
+	<dl> 
+		<center><label style="color: #2A4151 !important; text-shadow: none; font-weight: bold;">Archivos a Subir:</label></center>
+			<dd><div id="adjuntos"> 
+     		<center><input type="file" name="archivos[]" required/><br /></center>
+		</div></dd> 
+		<center><dt><a href="#" onClick="addCampo()">Subir otro archivo</a></dt></center> 
+		<input style="width: 100%;" data-theme="b" type="submit" data-icon="arrow-r" value="enviar" id="enviar" name="enviar"/> 
+</dl> 
+							<?php
 
-	<div>
-		<h1 align="CENTER">Cargar Archivos del Cliente</h1>
-	</div>
+								$consulta=$mysqli->query("SELECT CL.cliente_codigo,CL.cliente_identidad,CAC.categoriacaso_nombre FROM tbl_cliente CL INNER JOIN tbl_categoriacaso CAC ON CAC.categoriacaso_codigo=CL.categoriacaso_codigo ORDER by cliente_codigo DESC LIMIT 1");
 
-<form id='f' action='Document.htm'>
-	<center><label style="color: #2A4151 !important; text-shadow: none; font-weight: bold;">Cantidad de Archivos:</label></center>
-<div><select onchange='genList(this.value);' autofocus required>
-<option value=''>[SELECCIONE LA CANTIDAD DE ARCHIVOS]</option>
-<option value='1'>1</option>
-<option value='2'>2</option>
-<option value='3'>3</option>
-<option value='4'>4</option>
-<option value='5'>5</option>
-<option value='6'>6</option>
-<option value='7'>7</option>
-<option value='8'>8</option>
-<option value='9'>9</option>
-<option value='10'>10</option></select>
-</div>
-<div id='input_list'></div>
+								if($row = $consulta->fetch_array(MYSQLI_ASSOC)){
+								   $id = $row["cliente_codigo"];
+								   $identidad=$row["cliente_identidad"];
+								   $casonombre=$row["categoriacaso_nombre"];
+								}
 
+								if(isset($_POST['enviar'])){
+								if (isset ($_FILES["archivos"])) { 
+								$tot = count($_FILES["archivos"]["name"]); 
+								for ($i = 0; $i < $tot; $i++){ 
+							$tmp_name = $_FILES["archivos"]["tmp_name"][$i]; 
+							//$name = $_FILES["archivos"]["name"][$i];
+							$ruta=$_FILES["archivos"]["name"][$i];
 
-<input style="width: 100%;" data-theme="b" type="submit" data-icon="arrow-r" value="guardar" id="guardar" name="guardar"/> 
+							$rutaarchivos="Archivos/$identidad/$casonombre/".$ruta;
+						$insertar=$mysqli->query("INSERT INTO tbl_clientearchivos(cliente_codigo,archivos_ruta) VALUES('$id','$rutaarchivos')");
 
-</form>
+						if (!is_dir("Archivos/".$identidad) && $i==0) {
+							
+							mkdir("Archivos/".$identidad);
+							mkdir("Archivos/$identidad/".$casonombre);
+							move_uploaded_file($_FILES["archivos"]["tmp_name"][$i], "Archivos/$identidad/$casonombre/$ruta");
+							}
 
-          <style type="text/css">
+							if (is_dir("Archivos/".$identidad) && $i!=0) {
+
+								move_uploaded_file($_FILES['archivos']['tmp_name'][$i], "Archivos/$identidad/$casonombre/$ruta");
+									
+								}
+
+									} 
+								}	
+								
+							}	
+
+							?>  
+
+				</div>
+			</form>
+		</div>
+			</div>		
+			
+
+	 <style type="text/css">
 		  	 #contenido
         {
          		background: url(images/b.png);
@@ -83,26 +131,8 @@ display:block;
           font-color: #2A4151 !important;
           text-align: center;
         }
-		</style>
-
-<script>
-function genList(num){
-clean();
- for(var i = 0; i < num; i++){
- var elem = list.appendChild(document.createElement('input'));
- elem.required=true;
- elem.setAttribute('type','file');
- elem.name ='text'+i;
- elem.className = 'text';
- }
-}
-
-function clean(){
-list = document.getElementById('input_list');
- while(list.childNodes.length){
- list.removeChild(list.childNodes[list.childNodes.length - 1]);
- }
-}
-</script>
+		</style>      	
+	
 </body>
+
 </html>

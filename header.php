@@ -23,29 +23,29 @@
                            background: linear-gradient(to right, rgba(251, 251, 251), rgba(204, 207, 214, 0.33));overflow-x: overlay;">  
       
         <a onclick='javascript:tarea()'>
-        	<div class="brick1"></br></br><h5><P  style="COLOR: #000000; BACKGROUND-COLOR: #5FD3DE ">Clientes</P></h5></div>
+        	<div class="brick1"></br></br></br><h5><P  style="COLOR: #000000; BACKGROUND-COLOR: #5FD3DE ">Clientes</P></h5></div>
         </a>
         <div class="brick0"></div>
          <a onclick='javascript:tutorial()'>
-         <div class="brick2"></br></br><h5><P  style="COLOR: #000000; BACKGROUND-COLOR: #5FD3DE ">Agenda</P></h5>
+         <div class="brick2"></br></br></br><h5><P  style="COLOR: #000000; BACKGROUND-COLOR: #5FD3DE ">Agenda</P></h5>
          </div>
      	</a>
         <div class="brick0"></div>
          <a onclick='javascript:tarea()'>
-        	<div class="brick1"></br></br><h5><P  style="COLOR: #000000; BACKGROUND-COLOR: #5FD3DE ">Clientes</P></h5></div>
+        	<div class="brick1"></br></br></br><h5><P  style="COLOR: #000000; BACKGROUND-COLOR: #5FD3DE ">Clientes</P></h5></div>
         </a>
         <div class="brick0"></div>
          <a onclick='javascript:tutorial()'>
-         <div class="brick2"></br></br><h5><P  style="COLOR: #000000; BACKGROUND-COLOR: #5FD3DE ">Agenda</P></h5>
+         <div class="brick2"></br></br></br><h5><P  style="COLOR: #000000; BACKGROUND-COLOR: #5FD3DE ">Agenda</P></h5>
          </div>
      	</a>
         <div class="brick0"></div>
          <a onclick='javascript:tarea()'>
-        	<div class="brick1"></br></br><h5><P  style="COLOR: #000000; BACKGROUND-COLOR: #5FD3DE ">Clientes</P></h5></div>
+        	<div class="brick1"></br></br></br><h5><P  style="COLOR: #000000; BACKGROUND-COLOR: #5FD3DE ">Clientes</P></h5></div>
         </a>
         <div class="brick0"></div>
          <a onclick='javascript:tutorial()'>
-         <div class="brick2"></br></br><h5><P  style="COLOR: #000000; BACKGROUND-COLOR: #5FD3DE ">Agenda</P></h5>
+         <div class="brick2"></br></br></br><h5><P  style="COLOR: #000000; BACKGROUND-COLOR: #5FD3DE ">Agenda</P></h5>
          </div>
      	</a>
         <div class="brick0"></div>
