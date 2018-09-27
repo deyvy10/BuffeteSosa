@@ -1,9 +1,9 @@
 <?php 
-$conexion = mysqli_connect("localhost","deyvy10","humberto10","buffetesosa");
+include'conexion_mysql.php';
 
 $el_depto = $_POST['departamento'];
 
-$query = $conexion->query("SELECT * FROM tbl_municipio WHERE departamento_codigo = $el_depto");
+$query = $mysqli->query("SELECT * FROM tbl_municipio WHERE departamento_codigo = $el_depto");
 
 echo '<option value="">Seleccione</option>';
 

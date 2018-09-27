@@ -1,7 +1,6 @@
 <?php 
-$conexion = mysqli_connect("localhost","deyvy10","humberto10","buffetesosa");
-
-$query = $conexion->query("SELECT * FROM tbl_departamento");
+include'conexion_mysql.php';
+$query = $mysqli->query("SELECT * FROM tbl_departamento");
 
 echo '<option value="">Seleccione</option>';
 
