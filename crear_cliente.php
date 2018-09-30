@@ -58,7 +58,11 @@
 				        </select>
 
 			<center><label  style="color: #2A4151 !important; text-shadow: none; font-weight: bold;">Dirección:</label></center> 
-			 <td><textarea id="direccion" name="direccion" required></textarea></td>		    
+			 <td><textarea id="direccion" name="direccion" required></textarea></td>
+
+			 <center><label  style="color: #2A4151 !important; text-shadow: none; font-weight: bold;">Fecha de Inicio:</label></center> 
+          	<input id="fecha" name="fecha" type="date" class="form-control" autofocus required/>
+		    
 
 			<center><label  style="color: #2A4151 !important; text-shadow: none; font-weight: bold;">Teléfono:</label></center> 
           	<input id="telefono" name="telefono" type="text" class="telefono form-control" placeholder="Teléfono del Cliente" autofocus required/>
@@ -84,8 +88,9 @@
 						$telefono2=$_POST["telefono2"];
 						$correo=$_POST["correo"];
 						$direccion=$_POST["direccion"];
+						$fecha=$_POST["fecha"];
 
-		$insertarCliente=$mysqli->query("INSERT INTO tbl_cliente(cliente_nombre,cliente_apellido,cliente_identidad,departamento_codigo,municipio_codigo,cliente_correo,categoriacaso_codigo,cliente_direccion)VALUES('$nombre','$apellido','$cedula','".$_POST["departamento"]."','".$_POST["municipio"]."','$correo','".$_POST["categoria"]."','$direccion')");
+		$insertarCliente=$mysqli->query("INSERT INTO tbl_cliente(cliente_nombre,cliente_apellido,cliente_identidad,departamento_codigo,municipio_codigo,cliente_correo,cliente_direccion)VALUES('$nombre','$apellido','$cedula','".$_POST["departamento"]."','".$_POST["municipio"]."','$correo','$direccion')");
 
 		$ultimo_id=mysqli_insert_id($mysqli);
 
@@ -93,7 +98,7 @@
 
 		$insertartelefono2=$mysqli->query("INSERT INTO tbl_clientetelefono(cliente_codigo,telefono_telefono)VALUES('$ultimo_id','$telefono2')");
 
-		$insertarcaso=$mysqli->query("INSERT INTO tbl_caso(cliente_codigo,categoriacaso_codigo)VALUES('$ultimo_id','".$_POST["categoria"]."')");
+		$insertarcaso=$mysqli->query("INSERT INTO tbl_caso(cliente_codigo,categoriacaso_codigo,caso_fechacrea,caso_estado)VALUES('$ultimo_id','".$_POST["categoria"]."','$fecha',1)");
 						
 						echo "<script language=\"javascript\">
                         window.open('solicitar_archivos.php','_self',false);
