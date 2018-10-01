@@ -10,6 +10,20 @@ include ('conexion_mysql.php');
     <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.2/jquery.mobile-1.4.2.min.css">
     <script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
     <script src="http://code.jquery.com/mobile/1.4.2/jquery.mobile-1.4.2.min.js"></script>
+     <!--CSS-->    
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="css/dataTables.bootstrap.min.css">
+  <script type="text/javascript" language="javascript" src="https://cdn.datatables.net/responsive/2.2.1/js/dataTables.responsive.min.js"></script>
+    <!--Javascript-->    
+    <script src="js/jquery.dataTables.min.js"></script>
+    <script src="js/dataTables.bootstrap.min.js"></script>
+    <script src="js/lenguajeclientes.js"></script>     
+
+<!--Datatable Responsive-->
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.16/css/dataTables.bootstrap4.min.css">
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/responsive/2.2.1/css/responsive.bootstrap4.min.css">
+    <script type="text/javascript" language="javascript" src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap4.min.js"></script>
+    <script type="text/javascript" language="javascript" src="https://cdn.datatables.net/responsive/2.2.1/js/dataTables.responsive.min.js"></script>
 <script type="text/javascript"> 
 var numero = 0;
 evento = function (evt) { 
@@ -59,6 +73,26 @@ return evt.srcElement ? evt.srcElement : evt.target;
 
   }
 </script>
+<script>
+    $(document).ready(function() {
+    var table = $('#example').DataTable();
+
+    $('#example tbody').on( 'click', 'tr', function () {
+        if ( $(this).hasClass('selected') ) {
+            $(this).removeClass('selected');
+        }
+        else {
+            table.$('tr.selected').removeClass('selected');
+            $(this).addClass('selected');
+        }
+    } )
+$('#example tbody').on( 'click', 'tr', function () {
+    var data = table.row( this ).data();
+    document.getElementById('identidad').value=data.identidad;
+    document.getElementById('codigo').value=data.codigo;
+} );
+} );  
+</script>
 </head>
 
 
@@ -74,20 +108,35 @@ return evt.srcElement ? evt.srcElement : evt.target;
 			<h1 align="CENTER">Nuevo Caso de un Cliente</h1>
 		</div>
 	<dl> 
-
-			<center><label style="color: #2A4151 !important; text-shadow: none; font-weight: bold;">Cliente:</label></center>
-						<select name="cliente" id="cliente" data-mini="true" onchange="return mostrar_cliente();"   required/>
-		        			 <option value="">[SELECCIONE EL CLIENTE]</option>
-									<?php
-                          		  $query = $mysqli -> query ("SELECT cliente_codigo,concat(cliente_nombre,' ',cliente_apellido)as cliente,cliente_identidad FROM tbl_cliente");
-                            	while ($valores = mysqli_fetch_array($query)) {
-                            	echo '<option value="'.$valores[cliente_codigo].";".$valores[cliente_identidad].'"">'.$valores[cliente].'</option>';
-                            		}
-                          		?>
-				       </select>
+		                    <fieldset> 
+                          <h4><center>SELECCIONE UN CLIENTE</center></h4> 
+                      
+                         <table id="example" class="table table-striped table-bordered dt-responsive" cellspacing="0" width="100%">
+                          <thead>
+                            <tr>
+                                <th>Codigo</th>
+                                <th>Nombres</th>
+                                <th>Apellidos</th>
+                                <th>Identidad</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                            <tfoot>
+                            <tr>
+                                <th>Codigo</th>
+                                <th>Nombres</th>
+                                <th>Apellidos</th>
+                                <th>Identidad</th>
+                            </tr>
+                            </tfoot>
+                        </table> 
+                    </fieldset> 
+			<br>
 
 				 <input id="identidad" name="identidad" type="hidden" class="form-control" >
 				 <input id="caso" name="caso" type="hidden" class="form-control" >   
+				 <input id="codigo" name="codigo" type="hidden" class="form-control" >
 
 			<center><label style="color: #2A4151 !important; text-shadow: none; font-weight: bold;">Categoria del Caso:</label></center>
 						<select name="categoria" id="categoria" data-mini="true" onchange="return mostrar_caso();" required/>
@@ -113,9 +162,10 @@ return evt.srcElement ? evt.srcElement : evt.target;
 
 								if(isset($_POST['enviar'])){
 									$fecha=$_POST["fecha"];
+									$codigo=$_POST["codigo"];
 									$identidad=$_POST["identidad"];
 									$casonombre=$_POST["caso"];
-								$insertarcaso=$mysqli->query("INSERT INTO tbl_caso(cliente_codigo,categoriacaso_codigo,caso_fechacrea,caso_estado)VALUES('".$_POST["cliente"]."','".$_POST["categoria"]."','$fecha',1)");
+								$insertarcaso=$mysqli->query("INSERT INTO tbl_caso(cliente_codigo,categoriacaso_codigo,caso_fechacrea,caso_estado)VALUES('$codigo','".$_POST["categoria"]."','$fecha',1)");
 
 								if (isset ($_FILES["archivos"])) { 
 									$tot = count($_FILES["archivos"]["name"]); 
@@ -123,7 +173,7 @@ return evt.srcElement ? evt.srcElement : evt.target;
 									$tmp_name = $_FILES["archivos"]["tmp_name"][$i];
 									$ruta=$_FILES["archivos"]["name"][$i];
 									$rutaarchivos="Archivos/$identidad/$casonombre/".$ruta;
-									$insertar=$mysqli->query("INSERT INTO tbl_clientearchivos(cliente_codigo,archivos_ruta) VALUES('".$_POST["cliente"]."','$rutaarchivos')");
+									$insertar=$mysqli->query("INSERT INTO tbl_clientearchivos(cliente_codigo,archivos_ruta) VALUES('$codigo','$rutaarchivos')");
 
 									if (is_dir("Archivos/".$identidad) && $i==0) {
 										mkdir("Archivos/$identidad/".$casonombre);
